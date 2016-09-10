@@ -1,0 +1,4 @@
+(fp_lib_table
+  (lib (name DispBoard)(type KiCad)(uri J:\House\Projects\Clock\DisplayBoard.pretty)(options "")(descr ""))
+  (lib (name wld_logo)(type KiCad)(uri J:/House/Projects/Clock/wld_logo.pretty)(options "")(descr ""))
+)
