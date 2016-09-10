@@ -24,7 +24,7 @@ entity reg is
 		);
 end reg;
 
-architecture Behavioral of fsm_adjust is
+architecture Behavioral of reg is
 
 signal reg_Q : std_logic;
 
