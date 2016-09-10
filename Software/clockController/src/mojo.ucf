@@ -1,0 +1,108 @@
+#Created by Constraints Editor (xc6slx9-tqg144-3) - 2012/11/05
+NET "clk" TNM_NET = clk;
+TIMESPEC TS_clk = PERIOD "clk" 50 MHz HIGH 50%;
+
+# PlanAhead Generated physical constraints 
+NET "clk" LOC = P56;
+NET "rst_n" LOC = P38;
+
+NET "cclk" LOC = P70;
+
+NET "led<0>" LOC = P134;
+NET "led<1>" LOC = P133;
+NET "led<2>" LOC = P132;
+NET "led<3>" LOC = P131;
+NET "led<4>" LOC = P127;
+NET "led<5>" LOC = P126;
+NET "led<6>" LOC = P124;
+NET "led<7>" LOC = P123;
+
+NET "spi_mosi" LOC = P44;
+NET "spi_miso" LOC = P45;
+NET "spi_ss" LOC = P48;
+NET "spi_sck" LOC = P43;
+NET "spi_channel<0>" LOC = P46;
+NET "spi_channel<1>" LOC = P61;
+NET "spi_channel<2>" LOC = P62;
+NET "spi_channel<3>" LOC = P65;
+
+NET "avr_tx" LOC = P55;
+NET "avr_rx" LOC = P59;
+NET "avr_rx_busy" LOC = P39;
+
+
+NET "L64P_0" LOC = P117;
+NET "L65P_0" LOC = P115;
+NET "L66P_0" LOC = P112;
+NET "L1P_1" LOC = P105;
+NET "L32P_1" LOC = P102;
+NET "L33P_1" LOC = P100;
+NET "L34P_1" LOC = P98;
+NET "L40P_1" LOC = P95;
+NET "L41P_1" LOC = P93;
+NET "L42P_1" LOC = P88;
+NET "L43P_1" LOC = P85;
+NET "L45P_1" LOC = P83;
+NET "L46P_1" LOC = P81;
+NET "L47P_1" LOC = P79;
+NET "L74P_1" LOC = P75;
+NET "L2P_2" LOC = P67;
+NET "L14P_2" LOC = P58;
+		
+NET "L64N_0" LOC = P116;
+NET "L65N_0" LOC = P114;
+NET "L66N_0" LOC = P111;
+NET "L1N_1" LOC = P104;
+NET "L32N_1" LOC = P101;
+NET "L33N_1" LOC = P99;
+NET "L34N_1" LOC = P97;
+NET "L40N_1" LOC = P94;
+NET "L41N_1" LOC = P92;
+NET "L42N_1" LOC = P87;
+NET "L43N_1" LOC = P84;
+NET "L45N_1" LOC = P82;
+NET "L46N_1" LOC = P80;
+NET "L47N_1" LOC = P78;
+NET "L74N_1" LOC = P74;
+NET "L2N_2" LOC = P66;
+NET "L14N_2" LOC = P57;
+		
+NET "L3P_0" LOC = P140;
+NET "L2P_0" LOC = P142;
+NET "L1P_0" LOC = P144;
+NET "L83P_3" LOC = P2;
+NET "L52P_3" LOC = P6;
+NET "L51P_3" LOC = P8;
+NET "L50P_3" LOC = P10;
+NET "L49P_3" LOC = P12;
+NET "L44P_3" LOC = P15;
+NET "L43P_3" LOC = P17;
+NET "L42P_3" LOC = P22;
+NET "L41P_3" LOC = P24;
+NET "L37P_3" LOC = P27;
+NET "L36P_3" LOC = P30;
+NET "L2P_3" LOC = P33;
+NET "L1P_3" LOC = P35;
+NET "L64P_2" LOC = P41;
+NET "L31P_2" LOC = P51;
+		
+NET "L3N_0" LOC = P139;
+NET "L2N_0" LOC = P141;
+NET "L1N_0" LOC = P143;
+NET "L83N_3" LOC = P1;
+NET "L52N_3" LOC = P5;
+NET "L51N_3" LOC = P7;
+NET "L50N_3" LOC = P9;
+NET "L49N_3" LOC = P11;
+NET "L44N_3" LOC = P14;
+NET "L43N_3" LOC = P16;
+NET "L42N_3" LOC = P21;
+NET "L41N_3" LOC = P23;
+NET "L37N_3" LOC = P26;
+NET "L36N_3" LOC = P29;
+NET "L2N_3" LOC = P32;
+NET "L1N_3" LOC = P34;
+NET "L64N_2" LOC = P40;
+NET "L31N_2" LOC = P50;
+
+
