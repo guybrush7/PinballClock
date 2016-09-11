@@ -133,7 +133,7 @@ signal pps			: std_logic;
 signal blank_clk	: std_logic;
 
 -- Named I/O
--- Inputs
+-- Inputs - time display
 signal INPUT3		: std_logic;
 signal INPUT2		: std_logic;
 signal INPUT1		: std_logic;
@@ -141,6 +141,14 @@ signal BUTTON3		: std_logic;
 signal BUTTON2		: std_logic;
 signal BUTTON1		: std_logic;
 signal SWITCH		: std_logic;
+-- Inputs (extra) - date display
+signal AUXIN7		: std_logic;
+signal AUXIN6		: std_logic;
+signal AUXIN5		: std_logic;
+signal AUXIN4		: std_logic;
+signal AUXIN3		: std_logic;
+signal AUXIN2		: std_logic;
+signal AUXIN1		: std_logic;
 
 -- Outputs
 signal Aleft		: std_logic_vector(3 downto 0);
@@ -149,7 +157,14 @@ signal Cleft		: std_logic_vector(3 downto 0);
 signal Dleft		: std_logic_vector(3 downto 0);
 signal Eleft		: std_logic_vector(3 downto 0);
 signal Fleft		: std_logic_vector(3 downto 0);
-signal BLANK			: std_logic;
+signal Aright		: std_logic_vector(3 downto 0);
+signal Bright		: std_logic_vector(3 downto 0);
+signal Cright		: std_logic_vector(3 downto 0);
+signal Dright		: std_logic_vector(3 downto 0);
+signal Eright		: std_logic_vector(3 downto 0);
+signal Fright		: std_logic_vector(3 downto 0);
+signal BLANK		: std_logic;
+
 
 -- SPI
 signal RTC_SPI_CLK	: std_logic;
@@ -166,13 +181,28 @@ signal digMinOne		: std_logic_vector(3 downto 0);
 signal digSecTen		: std_logic_vector(3 downto 0);
 signal digSecOne		: std_logic_vector(3 downto 0);
 
+signal digYearTen		: std_logic_vector(3 downto 0);
+signal digYearOne		: std_logic_vector(3 downto 0);
+signal digMonTen		: std_logic_vector(3 downto 0);
+signal digMonOne		: std_logic_vector(3 downto 0);
+signal digDayTen		: std_logic_vector(3 downto 0);
+signal digDayOne		: std_logic_vector(3 downto 0);
 
+
+-- Adjust signals
 signal adjHourTen		: std_logic;
 signal adjHourOne		: std_logic;
 signal adjMinTen		: std_logic;
 signal adjMinOne		: std_logic;
 signal adjSecTen		: std_logic;
 signal adjSecOne		: std_logic;
+
+signal adjYearTen		: std_logic;
+signal adjYearOne		: std_logic;
+signal adjMonTen		: std_logic;
+signal adjMonOne		: std_logic;
+signal adjDayTen		: std_logic;
+signal adjDayOne		: std_logic;
 
 signal adjInc			: std_logic;
 signal adjDec			: std_logic;
@@ -184,6 +214,13 @@ signal rtcMinTen		: std_logic_vector(3 downto 0);
 signal rtcMinOne		: std_logic_vector(3 downto 0);
 signal rtcSecTen		: std_logic_vector(3 downto 0);
 signal rtcSecOne		: std_logic_vector(3 downto 0);
+
+signal rtcYearTen		: std_logic_vector(3 downto 0);
+signal rtcYearOne		: std_logic_vector(3 downto 0);
+signal rtcMonTen		: std_logic_vector(3 downto 0);
+signal rtcMonOne		: std_logic_vector(3 downto 0);
+signal rtcDayTen		: std_logic_vector(3 downto 0);
+signal rtcDayOne		: std_logic_vector(3 downto 0);
 
 signal rtc_ready		: std_logic;
 
@@ -197,10 +234,10 @@ signal tod_loadTime		: std_logic;
 
 -- Derived inputs
 signal sw_adj_db		: std_logic;
-signal btn_next_db	: std_logic;
+signal btn_next_db		: std_logic;
 signal btn_inc_db		: std_logic;
 signal btn_next_once	: std_logic;
-signal btn_inc_once	: std_logic;
+signal btn_inc_once		: std_logic;
 
 -- Synchronized inputs
 signal INPUT3_SYNC		: std_logic;
@@ -266,6 +303,12 @@ spi_channel <= "ZZZZ";				-- keep AVR output lines high-Z
 			minOne	=> digMinOne,
 			secTen	=> digSecTen,
 			secOne	=> digSecOne,
+			yearTen	=> digYearTen,	
+			yearOne	=> digYearOne,	
+			monTen	=> digMonTen,
+			monOne	=> digMonOne,
+			dayTen	=> digDayTen,
+			dayOne	=> digDayOne,
 			en			=> '1',
 			pps			=> pps,
 			adjHourTen	=> adjHourTen,
@@ -274,6 +317,12 @@ spi_channel <= "ZZZZ";				-- keep AVR output lines high-Z
 			adjMinOne	=> adjMinOne,
 			adjSecTen	=> adjSecTen,
 			adjSecOne	=> adjSecOne,
+			adjYearTen	=> adjYearTen,
+			adjYearOne	=> adjYearOne,
+			adjMonTen	=> adjMonTen,
+			adjMonOne	=> adjMonOne,
+			adjDayTen	=> adjDayTen,
+			adjDayOne	=> adjDayOne,
 			adjInc		=> adjInc,
 			adjDec		=> '0',
 			loadHourTen	=> rtcHourTen,
@@ -281,7 +330,13 @@ spi_channel <= "ZZZZ";				-- keep AVR output lines high-Z
 			loadMinTen	=> rtcMinTen,	
 			loadMinOne	=> rtcMinOne,	
 			loadSecTen	=> rtcSecTen,	
-			loadSecOne	=> rtcSecOne,	
+			loadSecOne	=> rtcSecOne,
+			loadYearTen	=> rtcYearTen,
+			loadYearOne	=> rtcYearOne,
+			loadMonTen	=> rtcMonTen,
+			loadMonOne	=> rtcMonOne,
+			loadDayTen	=> rtcDayTen,
+			loadDayOne	=> rtcDayOne,
 			
 			-- Load signal
 			loadReady	=> tod_loadReady,
@@ -302,7 +357,14 @@ spi_channel <= "ZZZZ";				-- keep AVR output lines high-Z
 			adjMinOne	=> adjMinOne,
 			adjSecTen	=> adjSecTen,
 			adjSecOne	=> adjSecOne,
-			adjInc		=> adjInc
+			adjInc		=> adjInc,
+			adjYearTen	=> adjYearTen,
+			adjYearOne	=> adjYearOne,
+			adjMonTen	=> adjMonTen,
+			adjMonOne	=> adjMonOne,
+			adjDayTen	=> adjDayTen,
+			adjDayOne	=> adjDayOne
+
 			);
 	
 	
@@ -325,12 +387,27 @@ spi_channel <= "ZZZZ";				-- keep AVR output lines high-Z
 			load_hr_one		=> digHourOne,
 			load_hr_ten		=> digHourTen,
 			
+			load_day_one	=> digDayOne,
+			load_day_ten	=> digDayTen,
+			load_mon_one	=> digMonOne,
+			load_mon_ten	=> digMonTen,
+			load_yr_one		=> digYearOne,
+			load_yr_ten		=> digYearTen,
+			
 			sec_one			=> rtcSecOne,
 			sec_ten			=> rtcSecTen,
 			min_one			=> rtcMinOne,
 			min_ten			=> rtcMinTen,
 			hr_one			=> rtcHourOne,
 			hr_ten			=> rtcHourTen,
+			
+			day_one			=> rtcDayOne,
+			day_ten			=> rtcDayTen,
+			mon_one			=> rtcMonOne,
+			mon_ten			=> rtcMonTen,
+			yr_one			=> rtcYearOne,
+			yr_ten			=> rtcYearTen,
+			
 			
 			cmd_write		=> rtc_cmd_write,
 			cmd_read		=> rtc_cmd_read,
@@ -436,42 +513,18 @@ spi_channel <= "ZZZZ";				-- keep AVR output lines high-Z
 	Cleft <= digMinTen;
 	Bleft <= digHourOne;
 	Aleft <= digHourTen;
+
+	Fright <= digYearOne;
+	Eright <= digYearTen;
+	Dright <= digDayOne;
+	Cright <= digDayTen;
+	Bright <= digMonOne;
+	Aright <= digMonTen;
+
 	
 	-- temp
 	--BLANK <= blank_clk;
 	BLANK <= (blank_clk and INPUT3) or (not INPUT2);
-
-
-	L40P_1 <= '0';
-
-		-- Right
-
-		L42P_1		<= pps;
-		L43P_1		<= pps;
-		L45P_1		<= pps;
-		L46P_1		<= pps;
-		L47P_1		<= pps;
-		L74P_1		<= pps;
-		L2P_2			<= pps;
-		L14P_2		<= pps;
-
-		L64N_0		<= pps;
-		L65N_0		<= pps;
-		L66N_0		<= pps;
-		L1N_1			<= pps;
-		L32N_1		<= pps;
-		L33N_1		<= pps;
-		L34N_1		<= pps;
-		L40N_1		<= pps;
-		L41N_1		<= pps;
-		L42N_1		<= pps;
-		L43N_1		<= pps;
-		L45N_1		<= pps;
-		L46N_1		<= pps;
-		L47N_1		<= pps;
-		L74N_1		<= pps;
-		L2N_2			<= pps;
-		L14N_2		<= pps;
 
 
 		--led(5 downto 0) <= "000000";
@@ -513,14 +566,14 @@ spi_channel <= "ZZZZ";				-- keep AVR output lines high-Z
 	L41P_3		<= Aleft(2);
 	L37P_3		<= Aleft(1);
 	L36P_3		<= Bleft(0);
-	L2P_3			<= Bleft(3);
-	L1P_3			<= Bleft(2);
+	L2P_3		<= Bleft(3);
+	L1P_3		<= Bleft(2);
 	L64P_2		<= Bleft(1);
 	L31P_2		<= RTC_SPI_MOSI;
 
-	L3N_0			<= Fleft(1);
-	L2N_0			<= Fleft(2);
-	L1N_0			<= Fleft(3);
+	L3N_0		<= Fleft(1);
+	L2N_0		<= Fleft(2);
+	L1N_0		<= Fleft(3);
 	L83N_3		<= Fleft(0);
 	L52N_3		<= Eleft(1);
 	L51N_3		<= Eleft(2);
@@ -532,11 +585,49 @@ spi_channel <= "ZZZZ";				-- keep AVR output lines high-Z
 	L41N_3		<= Dleft(0);
 	L37N_3		<= Cleft(1);
 	L36N_3		<= Cleft(2);
-	L2N_3			<= Cleft(3);
-	L1N_3			<= Cleft(0);
+	L2N_3		<= Cleft(3);
+	L1N_3		<= Cleft(0);
 	L64N_2		<= BLANK;
 	L31N_2		<= RTC_SPI_SS;
 		
+	-- Right twix
+	-- Extra input pins, commented to avoid warnings for unused signals
+	--AUXIN7		<= L64P_0;
+	--AUXIN6		<= L65P_0;
+	--AUXIN5		<= L66P_0;
+	--AUXIN4		<= L1P_1;
+	--AUXIN3		<= L32P_1;
+	--AUXIN2		<= L33P_1;
+	--AUXIN1		<= L34P_1;
+	
+	L40P_1 		<= '0';	-- spi clk
+	
+	L42P_1		<= Aright(0);
+	L43P_1		<= Aright(3);
+	L45P_1		<= Aright(2);
+	L46P_1		<= Aright(1);
+	L47P_1		<= Bright(0);
+	L74P_1		<= Bright(3);
+	L2P_2		<= Bright(2);
+	L14P_2		<= Bright(1);
+
+	L64N_0		<= Fright(1);
+	L65N_0		<= Fright(2);
+	L66N_0		<= Fright(3);
+	L1N_1		<= Fright(0);
+	L32N_1		<= Eright(1);
+	L33N_1		<= Eright(2);
+	L34N_1		<= Eright(3);
+	L40N_1		<= Eright(0);
+	L41N_1		<= Dright(1);
+	L42N_1		<= Dright(2);
+	L43N_1		<= Dright(3);
+	L45N_1		<= Dright(0);
+	L46N_1		<= Cright(1);
+	L47N_1		<= Cright(2);
+	L74N_1		<= Cright(3);
+	L2N_2		<= Cright(0);
+	L14N_2		<= BLANK;
 		
 
 end RTL;

@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <report-views version="2.0" >
  <header>
-  <DateModified>2016-09-10T18:15:31</DateModified>
+  <DateModified>2016-09-10T20:53:37</DateModified>
   <ModuleName>mojo_top</ModuleName>
   <SummaryTimeStamp>Unknown</SummaryTimeStamp>
   <SavedFilePath>J:/Projects/PinballClock/Software/clockController/project/iseconfig/mojo_top.xreport</SavedFilePath>
-  <ImplementationReportsDirectory>J:/Projects/PinballClock/Software/clockController/ise_files</ImplementationReportsDirectory>
+  <ImplementationReportsDirectory>J:/Projects/PinballClock/Software/clockController/ise_files\</ImplementationReportsDirectory>
   <DateInitialized>2016-09-10T18:15:31</DateInitialized>
   <EnableMessageFiltering>true</EnableMessageFiltering>
  </header>

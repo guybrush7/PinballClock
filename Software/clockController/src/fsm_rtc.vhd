@@ -48,6 +48,13 @@ entity fsm_rtc is
 		load_min_ten	: in std_logic_vector (3 downto 0);
 		load_hr_one		: in std_logic_vector (3 downto 0);
 		load_hr_ten		: in std_logic_vector (3 downto 0);
+
+		load_day_one	: in std_logic_vector (3 downto 0);
+		load_day_ten	: in std_logic_vector (3 downto 0);
+		load_mon_one	: in std_logic_vector (3 downto 0);
+		load_mon_ten	: in std_logic_vector (3 downto 0);
+		load_yr_one		: in std_logic_vector (3 downto 0);
+		load_yr_ten		: in std_logic_vector (3 downto 0);
 		
 		sec_one		: out std_logic_vector (3 downto 0);
 		sec_ten		: out std_logic_vector (3 downto 0);
@@ -55,6 +62,13 @@ entity fsm_rtc is
 		min_ten		: out std_logic_vector (3 downto 0);
 		hr_one		: out std_logic_vector (3 downto 0);
 		hr_ten		: out std_logic_vector (3 downto 0);
+		
+		day_one		: out std_logic_vector (3 downto 0);
+		day_ten		: out std_logic_vector (3 downto 0);
+		mon_one		: out std_logic_vector (3 downto 0);
+		mon_ten		: out std_logic_vector (3 downto 0);
+		yr_one		: out std_logic_vector (3 downto 0);
+		yr_ten		: out std_logic_vector (3 downto 0);
 		
 		-- command interface
 		cmd_write	: in std_logic;
@@ -67,14 +81,6 @@ entity fsm_rtc is
 end fsm_rtc;
 
 architecture Behavioral of fsm_rtc is
-
-signal reg_sec_one		: std_logic_vector (3 downto 0);
-signal reg_sec_ten		: std_logic_vector (3 downto 0);
-signal reg_min_one		: std_logic_vector (3 downto 0);
-signal reg_min_ten		: std_logic_vector (3 downto 0);
-signal reg_hr_one		: std_logic_vector (3 downto 0);
-signal reg_hr_ten		: std_logic_vector (3 downto 0);
-
 
 type rtc_spi_state is (	spi_ready, 
 						spi_init,
@@ -277,10 +283,10 @@ begin
 					wr_reg_array(1) <= '0' & load_sec_ten(2 downto 0) & load_sec_one(3 downto 0);
 					wr_reg_array(2) <= '0' & load_min_ten(2 downto 0) & load_min_one(3 downto 0);
 					wr_reg_array(3) <= "000" & load_hr_ten(0 downto 0) & load_hr_one(3 downto 0);
-					wr_reg_array(4) <= x"01";
-					wr_reg_array(5) <= x"01";
-					wr_reg_array(6) <= x"01";
-					wr_reg_array(7) <= x"00";
+					wr_reg_array(4) <= x"01";  -- day of week
+					wr_reg_array(5) <= "00" & load_day_ten(1 downto 0) & load_day_one(3 downto 0);
+					wr_reg_array(6) <= "000" & load_mon_ten(0) & load_mon_one(3 downto 0);
+					wr_reg_array(7) <= load_yr_ten & load_yr_one;
 				
 					state_rtc <= rtc_wr_start;
 				
@@ -338,6 +344,14 @@ begin
     min_ten	<= '0' & rd_reg_array(2)(6 downto 4);
 	hr_one	<= rd_reg_array(3)(3 downto 0);
 	hr_ten	<= "000" & rd_reg_array(3)(4 downto 4);
+	
+	day_one	<= rd_reg_array(5)(3 downto 0);
+	day_ten	<= "00" & rd_reg_array(5)(5 downto 4);
+	mon_one	<= rd_reg_array(6)(3 downto 0);
+	mon_ten	<= "000" & rd_reg_array(6)(4);
+	yr_one	<= rd_reg_array(7)(3 downto 0);
+	yr_ten	<= rd_reg_array(7)(7 downto 4);
+	
 
 	-- rtc ready state
 	ready <= '1' when state_rtc = rtc_ready else '0';

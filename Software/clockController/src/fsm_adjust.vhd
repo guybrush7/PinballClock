@@ -48,14 +48,21 @@ entity fsm_adjust is
 		adjMinOne	: out std_logic;
 		adjSecTen	: out std_logic;
 		adjSecOne	: out std_logic;
-		adjInc		: out std_logic
+		adjInc		: out std_logic;
+		
+		adjYearTen	: out std_logic;
+		adjYearOne	: out std_logic;
+		adjMonTen	: out std_logic;
+		adjMonOne	: out std_logic;
+		adjDayTen	: out std_logic;
+		adjDayOne	: out std_logic
 		
 		);
 end fsm_adjust;
 
 architecture Behavioral of fsm_adjust is
 
-signal adj_mask	: std_logic_vector(6 downto 0);
+signal adj_mask	: std_logic_vector(12 downto 0);
 
 
 
@@ -69,14 +76,14 @@ begin
 	proc_fsm: process(clk, rst)
 	begin
 		if rst = '1' then
-			adj_mask <= "0000001";
+			adj_mask <= "0000000000001";
 		elsif rising_edge(clk) then
 			if en_adj = '0' then
-				adj_mask <= "0000001";
+				adj_mask <= "0000000000001";
 			else
 				if btn_next = '1' then
-					adj_mask(6 downto 1) <= adj_mask(5 downto 0);
-					adj_mask(0) <= adj_mask(6);
+					adj_mask(12 downto 1) <= adj_mask(11 downto 0);
+					adj_mask(0) <= adj_mask(12);
 				else
 					adj_mask <= adj_mask;
 				end if;
@@ -95,12 +102,15 @@ begin
 	adjMinOne	<= adj_mask(3);
 	adjSecTen	<= adj_mask(2);
 	adjSecOne	<= adj_mask(1);
+	
+	adjMonTen	<= adj_mask(12);
+	adjMonOne	<= adj_mask(11);
+	adjDayTen	<= adj_mask(10);
+	adjDayOne	<= adj_mask(9);
+	adjYearTen	<= adj_mask(8);
+	adjYearOne	<= adj_mask(7);
+	
 	adjInc		<= btn_inc;
-	
-	
-	
-	
-	
 
 
 end Behavioral;
